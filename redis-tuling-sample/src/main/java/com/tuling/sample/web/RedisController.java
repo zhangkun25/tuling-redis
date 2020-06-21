@@ -33,7 +33,7 @@ public class RedisController {
         return "success";
     }
 
-    @RequestMapping("/jdisCluster")
+    @RequestMapping("/jedisCluster")
     public String jdisCluster(){
         try {
             String set = jedisCluster.set("jedisCluster", "jedisCluster");
