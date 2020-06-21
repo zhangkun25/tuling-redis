@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/redis-enjoy-sample/redis-enjoy-sample.iml" filepath="$PROJECT_DIR$/redis-enjoy-sample/redis-enjoy-sample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/redis-tuling-sample/redis-tuling-sample.iml" filepath="$PROJECT_DIR$/redis-tuling-sample/redis-tuling-sample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tuling-redis.iml" filepath="$PROJECT_DIR$/tuling-redis.iml" />
+    </modules>
+  </component>
+</project>
