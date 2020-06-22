@@ -28,7 +28,9 @@ public class RedisController {
             String ret = jedis.set(key, value);
             return ret;
         }finally {
-            jedis.close();
+            if(jedis != null){
+                jedis.close();
+            }
         }
     }
 
@@ -41,7 +43,8 @@ public class RedisController {
                     "local b = tonumber(ARGV[1])" +
                     "if a >=b then" +
                     "redis.call('set',KEYS[1],a-b)" +
-                    //模拟抛出异常回滚
+                    /*模拟抛出异常回滚
+                    "bb ==0 " +*/
                     "return 1" +
                     "end" +
                     "return 0";
@@ -50,7 +53,9 @@ public class RedisController {
         }catch (Exception e){
             e.printStackTrace();
         }finally {
-            jedis.close();
+            if(jedis != null){
+                jedis.close();
+            }
         }
         return "end";
     }
@@ -67,7 +72,9 @@ public class RedisController {
             String set = jedisCluster.set("jedisCluster", "jedisCluster");
             return set;
         }finally {
-            jedisCluster.close();
+            if(jedisCluster != null){
+                jedisCluster.close();
+            }
         }
     }
 
