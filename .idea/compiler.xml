@@ -9,11 +9,13 @@
         <outputRelativeToContentRoot value="true" />
         <module name="tuling-redis" />
         <module name="redis-enjoy-sample" />
+        <module name="redis-lock" />
         <module name="redis-tuling-sample" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="redis-enjoy-sample" target="1.8" />
+      <module name="redis-lock" target="1.8" />
       <module name="redis-tuling-sample" target="1.8" />
       <module name="tuling-redis" target="1.8" />
     </bytecodeTargetLevel>
@@ -21,6 +23,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="redis-enjoy-sample" options="-parameters" />
+      <module name="redis-lock" options="-parameters" />
       <module name="redis-tuling-sample" options="-parameters" />
       <module name="tuling-redis" options="-parameters" />
     </option>

@@ -6,6 +6,7 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/redis-enjoy-sample/pom.xml" />
         <option value="$PROJECT_DIR$/redis-tuling-sample/pom.xml" />
+        <option value="$PROJECT_DIR$/redis-lock/pom.xml" />
       </list>
     </option>
   </component>
