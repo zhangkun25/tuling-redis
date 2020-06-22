@@ -10,22 +10,50 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 
 @Slf4j
 @RestController
 public class RedisController {
-    /*@Autowired
-    private Jedis jedis;*/
+    @Autowired
+    private Jedis jedis;
     @Autowired
     private JedisCluster jedisCluster;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
-    /*@RequestMapping("/string")
+    @RequestMapping("/string")
     public String setAndGet(String key,String value){
-        String ret = jedis.set(key, value);
-        return ret;
-    }*/
+        try {
+            String ret = jedis.set(key, value);
+            return ret;
+        }finally {
+            jedis.close();
+        }
+    }
+
+    @RequestMapping("/lua_test")
+    public String luaTest(){
+        try {
+            jedis.set("product_stock_10016","15");
+            String script = "local count = redis.call('get',KEYS[1])" +
+                    "local a = tonumber(count)" +
+                    "local b = tonumber(ARGV[1])" +
+                    "if a >=b then" +
+                    "redis.call('set',KEYS[1],a-b)" +
+                    //模拟抛出异常回滚
+                    "return 1" +
+                    "end" +
+                    "return 0";
+            Object eval = jedis.eval(script, Arrays.asList("product_stock_10016"), Arrays.asList("10"));
+            log.info("--------->{}",eval);
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            jedis.close();
+        }
+        return "end";
+    }
 
     @RequestMapping("/stringRedisTemplate")
     public String test1(String key,String value){

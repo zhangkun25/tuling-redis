@@ -26,7 +26,7 @@ public class JedisConfig {
      * 单节点配置
      * @return
      */
-    /*@Bean
+    @Bean
     public JedisPool jedisPool(){
         return new JedisPool(jedisPoolConfig(),REDIS_SERVER,REDIS_PORT,TIME_OUT,null);
     }
@@ -34,7 +34,7 @@ public class JedisConfig {
     @Bean
     public Jedis jedis(){
         return jedisPool().getResource();
-    }*/
+    }
     /**
      * 哨兵配置
      */
