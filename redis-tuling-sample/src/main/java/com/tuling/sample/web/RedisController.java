@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
+import redis.clients.jedis.Pipeline;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -34,6 +36,10 @@ public class RedisController {
         }
     }
 
+    /**
+     * lua脚本实例
+     * @return
+     */
     @RequestMapping("/lua_test")
     public String luaTest(){
         try {
@@ -58,6 +64,23 @@ public class RedisController {
             }
         }
         return "end";
+    }
+
+    /**
+     * 基于jedis的pipeline实例
+     * @return
+     */
+    @RequestMapping("/pipeline")
+    public String pipeline(){
+        Pipeline pipeline = jedis.pipelined();
+        for(int i=0;i<10;i++){
+            pipeline.incr("pipelineKey");
+            pipeline.set("plKey","plKey" + i);
+        }
+        List<Object> results = pipeline.syncAndReturnAll();
+        log.info("{}",results);
+
+        return "pipeline end";
     }
 
     @RequestMapping("/stringRedisTemplate")
