@@ -17,3 +17,7 @@ spring:
         min-idle: 10
         max-wait: 1000
 
+bloom:
+  filter:
+    expectedInsertions: 2000; #存入的数据量
+    fpp: 0.01                 #误判率

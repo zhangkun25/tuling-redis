@@ -1,16 +1,20 @@
 package com.tuling.sample.web;
 
+import com.google.common.hash.BloomFilter;
+import com.google.common.hash.Funnels;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.Pipeline;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,6 +28,41 @@ public class RedisController {
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
+    @Autowired
+    private BloomFilter<String> bloomFilter;
+
+
+    @PostConstruct
+    public void init(){
+        //将所有数据存入布隆过滤器
+        String[] keys = new String[2000];
+        for(String key : keys){
+            bloomFilter.put(key);
+        }
+    }
+
+    /**
+     * 测试在布隆过滤器中是否存在
+     */
+    @RequestMapping("/bloomTest")
+    public String bloomTest(String key){
+        //1、从布隆过滤器这一级缓存判断下key是否存在
+        boolean exists = bloomFilter.mightContain(key);
+        if(!exists){
+            return "查询的商品不存在";
+        }
+        //2、从redis缓存中获取
+        String cacheValue = "";
+        if(StringUtils.isEmpty(cacheValue)){
+            //3、从数据库获取
+            //3.1、从数据库查询
+            //3.2、将查询到的数据放入redis缓存
+            //3.3、设置缓存过期时间
+            return "数据库获取到的数据是";
+        }else{
+            return cacheValue;
+        }
+    }
     @RequestMapping("/string")
     public String setAndGet(String key,String value){
         try {
